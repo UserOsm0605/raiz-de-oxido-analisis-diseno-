@@ -1,0 +1,40 @@
+sequenceDiagram
+    autonumber
+    actor J as Jugador (niño)
+    participant W as WorldScene
+    participant SM as SceneManager
+    participant MG as Minigame
+    participant P as Profile
+    participant GS as GameState
+
+    J->>W: Se acerca a la máquina de la zona y presiona Enter
+    W->>SM: push(Minigame, id, ronda=1, modo="historia")
+    SM->>MG: on_enter()
+    MG->>MG: setup() y muestra pantalla de instrucciones
+    J->>MG: Presiona "¡Jugar!"
+    MG->>MG: start_play()
+
+    loop Mientras la ronda no termine
+        J->>MG: Arrastra, atrapa o hace clic en un objeto
+        alt Respuesta correcta
+            MG->>MG: good(puntos, ficha)
+            MG-->>J: Sonido de acierto y puntos
+        else Respuesta incorrecta
+            MG->>MG: bad(mensaje)
+            MG-->>J: Explica por qué estuvo mal (sin castigo)
+        end
+    end
+
+    MG->>MG: stars_for_errors(errores)
+    MG->>P: record(mg_id, ronda, estrellas, puntos)
+    P-->>MG: true si es nuevo récord
+    MG->>P: unlock(fichas ganadas de la Enciclopedia)
+    opt Primera victoria en Modo Historia
+        MG->>GS: give(recompensa) y set_flag(mg_id)
+        GS->>GS: save()
+    end
+    MG-->>J: Pantalla de resultados: estrellas, dato aprendido y recompensa
+    J->>MG: Presiona "Continuar"
+    MG->>SM: pop(resultado)
+    SM->>W: on_resume(resultado)
+    W-->>J: El mundo cambia (habilidad, llave o camino abierto)
