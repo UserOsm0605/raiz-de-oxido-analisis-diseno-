@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Raíz de Óxido: pantallas</title>
+<style>
+:root{
+  --bg:#121418; --ink:#f0f0e8; --dim:#aaaca5; --panel:#22282c; --panel2:#3a4246; --border:#6e7876;
+  --green:#40c86e; --green-d:#1f4e3d; --neon:#78ff96; --rust:#a0522d; --rust-l:#cd7846;
+  --yellow:#f5cd46; --blue:#468ce6; --red:#dc463c; --paper:#eee4cd; --paper-ink:#3c3024;
+  --page:#0d0f12; --page-ink:#e8e8e0; --page-dim:#9a9c96; --card:#181b20;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){ --page:#f2f1ec; --page-ink:#1d2024; --page-dim:#5c5f63; --card:#ffffff; }
+}
+:root[data-theme="light"]{ --page:#f2f1ec; --page-ink:#1d2024; --page-dim:#5c5f63; --card:#ffffff; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--page);color:var(--page-ink);font-family:"Inter",system-ui,sans-serif;padding:32px 16px 64px}
+header.doc{max-width:1100px;margin:0 auto 28px}
+header.doc h1{font-family:"Inter Display","Inter",sans-serif;font-size:32px;letter-spacing:-.5px}
+header.doc p{color:var(--page-dim);margin-top:8px;max-width:760px;line-height:1.5}
+nav.tabs{max-width:1100px;margin:0 auto 18px;display:flex;flex-wrap:wrap;gap:8px}
+nav.tabs button{font:inherit;font-size:14px;padding:8px 14px;border-radius:999px;border:1px solid var(--page-dim);background:transparent;color:var(--page-ink);cursor:pointer}
+nav.tabs button[aria-pressed="true"]{background:var(--page-ink);color:var(--page)}
+figure.frame{max-width:1100px;margin:0 auto 40px}
+figure.frame figcaption{margin-bottom:10px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+figure.frame figcaption b{font-size:18px}
+figure.frame figcaption span{color:var(--page-dim);font-size:14px}
+.viewport{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,.35)}
+.viewport > .screen{position:absolute;left:0;top:0;transform-origin:0 0}
+
+/* ===== pantalla de juego (1280 x 720) ===== */
+.screen{width:1280px;height:720px;background:var(--bg);color:var(--ink);font-family:"Inter",sans-serif;position:relative;overflow:hidden}
+.screen .disp{font-family:"Inter Display","Inter",sans-serif}
+.btn{display:flex;align-items:center;justify-content:center;gap:12px;height:62px;border-radius:14px;font-weight:700;font-size:24px;color:#fff;
+  box-shadow:inset 0 -5px 0 rgba(0,0,0,.28), 0 4px 0 rgba(0,0,0,.35)}
+.btn.focus{outline:4px solid var(--yellow);outline-offset:4px}
+.hint{position:absolute;bottom:16px;left:0;right:0;text-align:center;color:var(--dim);font-size:17px}
+.panel{background:rgba(34,40,44,.92);border:2px solid var(--border);border-radius:14px}
+
+/* 1. inicio */
+.s-inicio{background:radial-gradient(ellipse at 50% 115%, #1f4e3d 0%, #121418 62%)}
+.s-inicio .sky{position:absolute;inset:0;background:linear-gradient(#0e1a22, transparent 60%)}
+.s-inicio .factory{position:absolute;right:70px;bottom:150px;width:330px;height:210px}
+.s-inicio .factory i{position:absolute;bottom:0;background:#2c2622;border-top:4px solid #4a3a30}
+.s-inicio .smoke{position:absolute;border-radius:50%;background:rgba(120,110,100,.22)}
+.s-inicio .ground{position:absolute;left:0;right:0;bottom:0;height:150px;background:linear-gradient(#24352c,#16201b)}
+.s-inicio .ceiba{position:absolute;left:150px;bottom:140px;width:300px;height:330px}
+.s-inicio .title{position:absolute;top:120px;left:0;right:0;text-align:center}
+.s-inicio .title h1{font-size:104px;font-weight:900;letter-spacing:-2px;line-height:1;color:var(--ink);text-shadow:0 6px 0 #5a2c16, 0 0 40px rgba(120,255,150,.25)}
+.s-inicio .title h1 em{font-style:normal;color:var(--rust-l)}
+.s-inicio .title p{margin-top:14px;font-size:26px;color:var(--neon)}
+.s-inicio .press{position:absolute;bottom:56px;left:0;right:0;text-align:center;font-size:28px;font-weight:700;color:var(--yellow)}
+.robot141{position:absolute;width:64px;height:80px}
+.robot141 .head{position:absolute;left:8px;top:0;width:48px;height:36px;background:#9aa0a2;border-radius:10px;border:3px solid #4d5254}
+.robot141 .visor{position:absolute;left:8px;top:10px;width:26px;height:10px;background:var(--neon);border-radius:5px;box-shadow:0 0 10px var(--neon)}
+.robot141 .body{position:absolute;left:12px;top:36px;width:40px;height:30px;background:#7d8486;border:3px solid #4d5254;border-radius:6px}
+.robot141 .core{position:absolute;left:14px;top:8px;width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--neon)}
+.robot141 .leg{position:absolute;top:66px;width:10px;height:14px;background:#4d5254;border-radius:3px}
+.robot141 .rustspot{position:absolute;width:10px;height:6px;background:var(--rust);border-radius:3px}
+
+/* 2. menú */
+.s-menu{background:linear-gradient(115deg,#121418 0 55%, #172620 100%)}
+.s-menu .logo{position:absolute;left:90px;top:70px}
+.s-menu .logo h1{font-size:64px;font-weight:900;letter-spacing:-1px}
+.s-menu .logo h1 em{font-style:normal;color:var(--rust-l)}
+.s-menu .logo p{color:var(--dim);font-size:20px;margin-top:4px}
+.s-menu .list{position:absolute;left:90px;top:220px;width:420px;display:flex;flex-direction:column;gap:18px}
+.s-menu .list .btn{justify-content:flex-start;padding-left:26px}
+.s-menu .preview{position:absolute;right:80px;top:150px;width:560px;height:400px;padding:28px}
+.s-menu .preview h3{font-size:30px;color:var(--yellow)}
+.s-menu .preview p{color:var(--ink);font-size:20px;line-height:1.5;margin-top:12px}
+.s-menu .tagrow{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+.s-menu .tag{padding:6px 12px;border-radius:999px;font-size:16px;font-weight:700;color:#111}
+.s-menu .player{position:absolute;right:80px;top:70px;font-size:18px;color:var(--dim)}
+.s-menu .player b{color:var(--ink)}
+
+/* 3. mundo */
+.s-mundo .map{position:absolute;inset:0;display:grid;grid-template-columns:repeat(20,64px);grid-auto-rows:64px}
+.t{width:64px;height:64px;position:relative}
+.t.g{background:#3f7a45}.t.g2{background:#447f49}
+.t.d{background:#8a6f4b}.t.r{background:#6a4a35}.t.r2{background:#5c4030}
+.t.w{background:#2f6f9e}.t.wt{background:#5b4a2c}
+.t.wall{background:#3b3f44;box-shadow:inset 0 -18px 0 #2b2e33}
+.t.tree::after{content:"";position:absolute;left:4px;top:-6px;width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#5fa55a,#2e6b35);box-shadow:0 8px 0 rgba(0,0,0,.25)}
+.t.drytree::after{content:"";position:absolute;left:10px;top:4px;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#7b6a4a,#4a3d2a)}
+.t.can::after{content:"";position:absolute;left:20px;top:22px;width:22px;height:18px;background:#b9b9b0;border-radius:4px;transform:rotate(18deg)}
+.s-mundo .enemy{position:absolute;width:54px;height:54px;border-radius:12px;background:#6d6f72;border:3px solid #3a3c3f}
+.s-mundo .enemy::after{content:"";position:absolute;left:10px;top:14px;width:28px;height:9px;border-radius:4px;background:var(--red);box-shadow:0 0 10px var(--red)}
+.s-mundo .nucleo{position:absolute;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle,#c8ffd5,#40c86e 55%,transparent 72%);box-shadow:0 0 40px 10px rgba(120,255,150,.45)}
+.s-mundo .fog{position:absolute;inset:0;background:radial-gradient(ellipse at 42% 52%, transparent 38%, rgba(60,50,45,.55) 80%)}
+.hud-top{position:absolute;top:16px;left:16px;right:16px;display:flex;justify-content:space-between;align-items:flex-start}
+.pilas{display:flex;gap:8px;padding:10px 14px}
+.pila{width:24px;height:40px;border:3px solid #ddd;border-radius:5px;position:relative;background:#1b1e22}
+.pila::before{content:"";position:absolute;left:5px;top:-8px;width:8px;height:5px;background:#ddd;border-radius:2px}
+.pila.on::after{content:"";position:absolute;inset:3px;background:var(--neon);border-radius:2px}
+.status{padding:10px 16px;display:flex;gap:18px;align-items:center;font-size:18px}
+.eye{width:30px;height:20px;border-radius:50%;background:#2a0f0c;border:2px solid var(--red);position:relative}
+.eye::after{content:"";position:absolute;left:9px;top:4px;width:8px;height:8px;border-radius:50%;background:var(--red)}
+.zone{position:absolute;top:22px;left:0;right:0;text-align:center;font-size:22px;font-weight:800;text-shadow:0 2px 0 #000}
+.slots{position:absolute;left:16px;bottom:16px;display:flex;gap:10px;padding:10px}
+.slot{width:62px;height:62px;border-radius:10px;border:2px solid var(--border);background:#1b1e22;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px;color:var(--dim)}
+.slot b{font-size:22px;color:var(--ink)}
+.slot.empty{border-style:dashed}
+.dialog{position:absolute;left:250px;right:250px;bottom:16px;height:112px;padding:14px 20px;display:flex;gap:16px;background:var(--paper);color:var(--paper-ink);border:3px solid #6b5640;border-radius:14px}
+.dialog .face{width:80px;height:80px;flex:none;border-radius:10px;background:#c88a5a;position:relative;border:3px solid #6b5640}
+.dialog .face::before{content:"";position:absolute;left:0;right:0;top:0;height:30px;background:#2b1d16;border-radius:7px 7px 0 0}
+.dialog .face::after{content:"📻";position:absolute;right:-12px;bottom:-12px;font-size:28px}
+.dialog .who{font-weight:800;font-size:18px}
+.dialog .txt{font-size:21px;line-height:1.35;margin-top:4px}
+.dialog .more{position:absolute;right:18px;bottom:10px;font-size:15px;font-weight:700}
+.minimap{position:absolute;right:16px;bottom:16px;width:210px;height:112px;padding:8px}
+.minimap .mm{width:100%;height:100%;border-radius:8px;background:linear-gradient(90deg,#2d5a35 0 30%,#5e4a33 30% 70%,#3b3f44 70%);position:relative}
+.minimap .me{position:absolute;left:44%;top:48%;width:10px;height:10px;border-radius:50%;background:var(--yellow);box-shadow:0 0 0 3px rgba(245,205,70,.35)}
+.minimap .mg{position:absolute;left:78%;top:30%;width:10px;height:10px;background:var(--blue);transform:rotate(45deg)}
+
+/* 4. minijuego */
+.s-mg{background:#3a423e}
+.mg-head{position:absolute;top:0;left:0;right:0;height:76px;background:#22282c;border-bottom:3px solid #11151a;display:flex;align-items:center;justify-content:space-between;padding:0 28px}
+.mg-head h2{font-size:30px}
+.dots{display:flex;gap:8px;align-items:center;color:var(--dim);font-size:16px}
+.dots i{width:14px;height:14px;border-radius:50%;background:#555}.dots i.on{background:var(--yellow)}
+.mg-stats{display:flex;gap:26px;font-size:22px;font-weight:700}
+.stars{color:var(--yellow);letter-spacing:4px}
+.belt{position:absolute;left:0;right:0;top:170px;height:120px;background:repeating-linear-gradient(90deg,#2a2d31 0 38px,#33373c 38px 76px);border-top:8px solid #55595e;border-bottom:8px solid #55595e}
+.item{position:absolute;top:186px;width:96px;height:88px;border-radius:14px;background:#f4f1e8;color:#222;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:13px;font-weight:700;box-shadow:0 5px 0 rgba(0,0,0,.3);text-align:center;padding:4px}
+.item span{font-size:36px;line-height:1.1}
+.item.drag{top:330px;left:560px;transform:rotate(-6deg) scale(1.08);outline:4px solid var(--yellow)}
+.bins{position:absolute;left:70px;right:70px;bottom:46px;display:flex;gap:26px}
+.bin{flex:1;height:200px;border-radius:12px 12px 22px 22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-weight:800;font-size:22px;box-shadow:inset 0 -10px 0 rgba(0,0,0,.18), 0 6px 0 rgba(0,0,0,.35);position:relative}
+.bin::before{content:"";position:absolute;top:-16px;left:-8px;right:-8px;height:22px;border-radius:8px;background:inherit;filter:brightness(.85)}
+.bin span{font-size:44px}
+.bin.hot{outline:5px solid var(--yellow);outline-offset:6px}
+.toast{position:absolute;left:50%;top:96px;transform:translateX(-50%);padding:10px 22px;border-radius:999px;background:var(--green);color:#0b2414;font-weight:800;font-size:20px}
+
+/* 5. resultados */
+.s-res{background:radial-gradient(circle at 50% 30%, #23402f, #121418 70%)}
+.res-card{position:absolute;left:190px;right:190px;top:50px;bottom:50px;padding:34px 46px;text-align:center}
+.res-card h2{font-size:52px;font-weight:900;color:var(--yellow)}
+.big-stars{font-size:92px;letter-spacing:18px;color:var(--yellow);text-shadow:0 5px 0 #7a5a10;margin-top:6px}
+.big-stars .off{color:#4a4d52;text-shadow:none}
+.res-line{font-size:22px;color:var(--dim);margin-top:4px}
+.res-line b{color:var(--ink)}
+.learn{margin:20px auto 0;max-width:720px;padding:16px 22px;border-radius:12px;background:var(--paper);color:var(--paper-ink);font-size:21px;line-height:1.4;text-align:left}
+.learn b{display:block;font-size:15px;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;color:#7a5530}
+.reward{display:inline-flex;gap:12px;align-items:center;margin-top:18px;padding:10px 18px;border-radius:12px;border:2px dashed var(--neon);color:var(--neon);font-size:19px;font-weight:700}
+.res-btns{display:flex;gap:18px;justify-content:center;margin-top:22px}
+.res-btns .btn{width:250px}
+
+/* 6. opciones */
+.s-opt{background:#121418}
+.opt-card{position:absolute;left:230px;right:230px;top:30px;bottom:56px;padding:26px 40px}
+.opt-card h2{font-size:46px;color:var(--yellow);font-weight:900}
+.opt-row{display:flex;align-items:center;justify-content:space-between;height:66px;padding:0 18px;border-radius:12px;margin-top:8px;font-size:23px}
+.opt-row.focus{background:#2f3a3a;outline:3px solid var(--yellow)}
+.sel{display:flex;align-items:center;gap:14px;font-weight:700}
+.sel .arr{color:var(--dim);font-size:20px}
+.bar{width:220px;height:16px;border-radius:8px;background:#3a4044;overflow:hidden}
+.bar i{display:block;height:100%;width:70%;background:var(--green)}
+.toggle{width:62px;height:32px;border-radius:999px;background:var(--green);position:relative}
+.toggle::after{content:"";position:absolute;right:4px;top:4px;width:24px;height:24px;border-radius:50%;background:#fff}
+.toggle.off{background:#555}.toggle.off::after{right:auto;left:4px}
+.soon{font-size:15px;color:var(--dim);margin-left:10px}
+.sample{margin-top:14px;padding:12px 18px;border-radius:10px;background:var(--paper);color:var(--paper-ink);font-size:20px}
+
+/* 7. enciclopedia */
+.s-enc{background:#16191d}
+.enc-head{position:absolute;left:40px;top:28px;right:40px;display:flex;justify-content:space-between;align-items:center}
+.enc-head h2{font-size:44px;font-weight:900;color:var(--yellow)}
+.enc-tabs{display:flex;gap:10px}
+.enc-tabs span{padding:8px 16px;border-radius:999px;background:#2a3035;font-weight:700;font-size:18px}
+.enc-tabs span.on{background:var(--green);color:#0b2414}
+.enc-grid{position:absolute;left:40px;top:110px;width:560px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{height:124px;border-radius:12px;background:#22282c;border:2px solid #3a4246;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:14px;font-weight:700;text-align:center;padding:6px}
+.card span{font-size:40px}
+.card.lock{color:#666;border-style:dashed}.card.lock span{filter:grayscale(1) brightness(.4)}
+.card.sel{outline:4px solid var(--yellow)}
+.enc-detail{position:absolute;right:40px;top:110px;width:580px;bottom:40px;padding:26px 30px;background:var(--paper);color:var(--paper-ink);border-radius:16px;border:3px solid #6b5640}
+.enc-detail h3{font-size:34px}
+.enc-detail .ods{display:inline-block;margin-top:8px;padding:4px 12px;border-radius:6px;background:#56c02b;color:#fff;font-weight:800;font-size:15px}
+.enc-detail .pic{height:170px;margin:18px 0;border-radius:12px;background:linear-gradient(#bfe0f0,#e9f3dc);display:flex;align-items:center;justify-content:center;font-size:96px}
+.enc-detail p{font-size:20px;line-height:1.45}
+
+/* modo exportación: una sola pantalla al tamaño real */
+body.export{padding:0;background:#000}
+body.export header.doc, body.export nav.tabs, body.export figcaption{display:none}
+body.export figure.frame{margin:0;max-width:none}
+body.export .viewport{width:1280px;height:720px;border-radius:0;box-shadow:none}
+@media (max-width:600px){ header.doc h1{font-size:26px} }
+</style>
+</head>
+<body>
+<header class="doc">
+  <h1>Raíz de Óxido · Diseño de pantallas</h1>
+  <p>Prototipo de baja-media fidelidad de las pantallas principales del videojuego educativo <b>Raíz de Óxido</b> (niños de 8 a 10 años). Resolución de referencia: 1280 × 720. Los colores siguen la paleta del juego: oscuridad industrial contra verde natural y neón.</p>
+</header>
+<nav class="tabs" aria-label="Pantallas"></nav>
+<main id="frames"></main>
+
+<template id="tpl">
+<!-- 1 -->
+<section class="screen s-inicio" data-id="01-inicio" data-name="Pantalla de inicio" data-desc="Primera pantalla al abrir el juego. Presenta el título y pide una tecla para continuar.">
+  <div class="sky"></div>
+  <div class="factory">
+    <i style="left:0;width:150px;height:120px"></i><i style="left:150px;width:180px;height:170px"></i>
+    <i style="left:40px;width:28px;height:200px"></i><i style="left:220px;width:30px;height:230px"></i>
+    <div class="smoke" style="left:20px;top:-80px;width:90px;height:70px"></div>
+    <div class="smoke" style="left:190px;top:-120px;width:120px;height:90px"></div>
+  </div>
+  <svg class="ceiba" viewBox="0 0 300 330" aria-hidden="true">
+    <rect x="132" y="150" width="36" height="180" rx="8" fill="#6b4a33"/>
+    <path d="M150 210 L70 150 M150 190 L235 140" stroke="#6b4a33" stroke-width="16" stroke-linecap="round"/>
+    <ellipse cx="150" cy="120" rx="140" ry="70" fill="#2f6b3a"/><ellipse cx="90" cy="105" rx="70" ry="45" fill="#3f8a4a"/>
+    <ellipse cx="200" cy="100" rx="80" ry="48" fill="#3a7f45"/>
+  </svg>
+  <div class="ground"></div>
+  <div class="robot141" style="left:608px;bottom:130px;transform:scale(1.6)">
+    <div class="head"><div class="visor"></div></div><div class="body"><div class="core"></div></div>
+    <div class="leg" style="left:16px"></div><div class="leg" style="left:38px"></div>
+    <div class="rustspot" style="left:40px;top:42px"></div>
+  </div>
+  <div class="title disp"><h1>Raíz de <em>Óxido</em></h1><p>Devuélvele la vida al Valle Verdemar</p></div>
+  <div class="press">Presiona Enter o haz clic para empezar</div>
+  <div class="hint">Universidad de Colima · FIE · Proyecto Integrador 1D</div>
+</section>
+
+<!-- 2 -->
+<section class="screen s-menu" data-id="02-menu-principal" data-name="Menú principal" data-desc="Cinco opciones grandes. Se usa con flechas y Enter o con el ratón. A la derecha se explica la opción enfocada.">
+  <div class="logo disp"><h1>Raíz de <em>Óxido</em></h1><p>Menú principal</p></div>
+  <div class="player">Jugador: <b>Ana</b> · Partida guardada: Los Suburbios</div>
+  <div class="list">
+    <div class="btn focus" style="background:#266e48">▶ Modo Historia</div>
+    <div class="btn" style="background:#b06822">★ Modo Minijuegos</div>
+    <div class="btn" style="background:#2c6096">📖 Enciclopedia</div>
+    <div class="btn" style="background:#4e545c">⚙ Opciones</div>
+    <div class="btn" style="background:#823828">✕ Salir</div>
+  </div>
+  <div class="preview panel">
+    <h3 class="disp">Modo Historia</h3>
+    <p>Acompaña a 141 por las siete zonas del Valle Verdemar. Planta los núcleos de vida, gana los minijuegos y libera a los robots atrapados por Máximo.</p>
+    <p style="color:var(--dim);font-size:18px">Antes y después de la aventura hay cinco preguntas cortas para ver cuánto aprendiste.</p>
+    <div class="tagrow">
+      <span class="tag" style="background:#26bde2">ODS 6</span><span class="tag" style="background:#fcc30b">ODS 7</span>
+      <span class="tag" style="background:#bf8b2e">ODS 12</span><span class="tag" style="background:#3f7e44;color:#fff">ODS 13</span>
+      <span class="tag" style="background:#0a97d9">ODS 14</span><span class="tag" style="background:#56c02b">ODS 15</span>
+    </div>
+  </div>
+  <div class="hint">Flechas para elegir · Enter para entrar · Esc para volver</div>
+</section>
+
+<!-- 3 -->
+<section class="screen s-mundo" data-id="03-juego-exploracion" data-name="Pantalla principal de juego" data-desc="Vista cenital del mundo con el HUD: pilas de energía, Presencia de Máximo, núcleos, habilidades, minimapa y la radio de Itzel.">
+  <div class="map" id="map"></div>
+  <div class="nucleo" style="left:1010px;top:250px"></div>
+  <div class="enemy" style="left:860px;top:380px"></div>
+  <div class="enemy" style="left:1100px;top:470px"></div>
+  <div class="robot141" style="left:540px;top:330px"><div class="head"><div class="visor"></div></div><div class="body"><div class="core"></div></div><div class="leg" style="left:16px"></div><div class="leg" style="left:38px"></div><div class="rustspot" style="left:40px;top:42px"></div></div>
+  <div class="fog"></div>
+  <div class="zone disp">Los Suburbios</div>
+  <div class="hud-top">
+    <div class="pilas panel"><div class="pila on"></div><div class="pila on"></div><div class="pila"></div></div>
+    <div class="status panel"><div class="eye"></div><span>Presencia <b>42%</b></span><span style="color:var(--neon)">● Núcleos <b>1/2</b></span></div>
+  </div>
+  <div class="slots panel">
+    <div class="slot"><b>⚡</b>Dash</div><div class="slot"><b>🛡</b>Escudo</div><div class="slot empty"><b>+</b>vacío</div>
+  </div>
+  <div class="dialog">
+    <div class="face"></div>
+    <div><div class="who">Itzel (por radio)</div><div class="txt">¡Ese brillo verde es un núcleo! Llévalo a la tierra seca junto al árbol para que vuelva a crecer.</div></div>
+    <div class="more">Enter ▸</div>
+  </div>
+  <div class="minimap panel"><div class="mm"><div class="me"></div><div class="mg"></div></div></div>
+</section>
+
+<!-- 4 -->
+<section class="screen s-mg" data-id="04-minijuego" data-name="Minijuego: Banda Separadora" data-desc="Ejemplo de minijuego (Vertedero, ODS 12). El niño arrastra cada residuo al bote correcto antes de que la banda lo lleve.">
+  <div class="mg-head">
+    <h2 class="disp">Banda Separadora</h2>
+    <div class="dots">Ronda <i class="on"></i><i></i><i></i></div>
+    <div class="mg-stats"><span>Aciertos 7/15</span><span>Puntos 70</span></div>
+  </div>
+  <div class="toast">¡Bien! La lata se recicla una y otra vez</div>
+  <div class="belt"></div>
+  <div class="item" style="left:90px"><span>🍌</span>Cáscara de plátano</div>
+  <div class="item" style="left:300px"><span>🔋</span>Pila</div>
+  <div class="item" style="left:820px"><span>📦</span>Caja de cartón</div>
+  <div class="item" style="left:1040px"><span>🧻</span>Servilleta usada</div>
+  <div class="item drag"><span>🧴</span>Botella PET</div>
+  <div class="bins">
+    <div class="bin" style="background:#46aa50;color:#fff"><span>🍃</span>Orgánicos</div>
+    <div class="bin hot" style="background:#e1e1dc;color:#282e34"><span>♻️</span>Reciclables</div>
+    <div class="bin" style="background:#eb8c32;color:#281e14"><span>🗑️</span>No reciclables</div>
+    <div class="bin" style="background:#825a3c;color:#fff"><span>⚠️</span>Manejo especial</div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="screen s-res" data-id="05-resultados" data-name="Resultados del minijuego" data-desc="Al terminar se muestran estrellas según los errores, lo que se aprendió y la recompensa que desbloquea el avance en el mundo.">
+  <div class="res-card panel">
+    <h2 class="disp">¡Lo lograste!</h2>
+    <div class="big-stars">★★<span class="off">★</span></div>
+    <div class="res-line">Banda Separadora · Ronda 1 · <b>150 puntos</b> · 3 errores · <b style="color:var(--yellow)">¡Nuevo récord!</b></div>
+    <div class="learn"><b>Lo que aprendiste</b>Separar en casa ayuda a que cada residuo tenga otra vida. Las pilas y los focos van aparte porque pueden ensuciar la tierra y el agua.</div>
+    <div class="reward">🔑 Obtuviste la Llave del Vertedero · 2 fichas nuevas en la Enciclopedia</div>
+    <div class="res-btns">
+      <div class="btn focus" style="background:#266e48">Continuar</div>
+      <div class="btn" style="background:#b06822">Jugar otra vez</div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="screen s-opt" data-id="06-configuracion" data-name="Configuración (Opciones)" data-desc="Ajustes pensados para niños y para el aula: volumen, tamaño y velocidad del texto, flechas guía y pantalla completa.">
+  <div class="opt-card panel">
+    <h2 class="disp">Opciones</h2>
+    <div class="opt-row"><span>Volumen</span><div class="sel"><span class="arr">◀</span><div class="bar"><i></i></div><span class="arr">▶</span></div></div>
+    <div class="opt-row focus"><span>Tamaño del texto</span><div class="sel"><span class="arr">◀</span>Grande<span class="arr">▶</span></div></div>
+    <div class="opt-row"><span>Lectura en voz alta <span class="soon">Próximamente</span></span><div class="toggle off"></div></div>
+    <div class="opt-row"><span>Flechas guía</span><div class="toggle"></div></div>
+    <div class="opt-row"><span>Velocidad del texto</span><div class="sel"><span class="arr">◀</span>x2<span class="arr">▶</span></div></div>
+    <div class="opt-row"><span>Pantalla completa</span><div class="toggle"></div></div>
+    <div class="sample">Así aparece el texto del juego.</div>
+  </div>
+  <div class="hint">Flechas para cambiar · Esc para volver</div>
+</section>
+
+<!-- 7 -->
+<section class="screen s-enc" data-id="07-enciclopedia" data-name="Enciclopedia" data-desc="Fichas que el niño desbloquea al jugar. Cada ficha explica un dato real y el ODS con el que se relaciona.">
+  <div class="enc-head"><h2 class="disp">Enciclopedia</h2><div class="enc-tabs"><span>Especies</span><span class="on">Objetos</span><span>Tarjetas ODS</span><span>Diario</span></div></div>
+  <div class="enc-grid">
+    <div class="card"><span>🧴</span>Botella PET</div><div class="card sel"><span>🔋</span>Pila</div><div class="card"><span>🥫</span>Lata</div><div class="card"><span>🍌</span>Cáscara</div>
+    <div class="card"><span>📦</span>Cartón</div><div class="card"><span>💡</span>Foco ahorrador</div><div class="card lock"><span>📱</span>???</div><div class="card lock"><span>🫙</span>???</div>
+    <div class="card lock"><span>🐢</span>???</div><div class="card lock"><span>💧</span>???</div><div class="card lock"><span>☀️</span>???</div><div class="card lock"><span>🌳</span>???</div>
+  </div>
+  <div class="enc-detail">
+    <h3 class="disp">Pila</h3><span class="ods">ODS 12 · Producción y consumo responsables</span>
+    <div class="pic">🔋</div>
+    <p>Una pila tirada en la basura puede soltar metales que ensucian la tierra y el agua. Guárdalas en un frasco y llévalas a un punto de acopio.</p>
+    <p style="margin-top:12px;color:#7a5530;font-weight:700">Va en: Manejo especial</p>
+  </div>
+  <div class="hint">8 de 40 fichas descubiertas</div>
+</section>
+</template>
+
+<script>
+(function(){
+  const params = new URLSearchParams(location.search);
+  const only = params.get("s");
+  const tpl = document.getElementById("tpl").content;
+  const screens = [...tpl.querySelectorAll(".screen")];
+  const frames = document.getElementById("frames");
+  const nav = document.querySelector("nav.tabs");
+  if (only) document.body.classList.add("export");
+
+  // mapa de mosaicos de la pantalla de juego (20 x 12)
+  function buildMap(el){
+    const rows = [
+      "wwwwgggTggggrrrrRRRR",
+      "wwwggTgggggdrrcrRRRR",
+      "wwgggggggdddrrrrrRRR",
+      "wtggggTgddgggrrcrrRR",
+      "wtgggggddgggggrrrrRR",
+      "ttgggdddggTgggrrrrrR",
+      "ttgddgggggggggdrrrrR",
+      "tgddgggTgggggggrrrcR",
+      "gddggggggggXgggrrrrR",
+      "ddgggTggggggggggrrrR",
+      "dggggggggXggggggrrRR",
+      "ggggggggggggggggrRRR"];
+    rows.forEach((row,y)=>[...row].forEach((c,x)=>{
+      const t=document.createElement("div");
+      const alt=(x+y)%2?"g":"g2";
+      t.className="t "+({w:"w",t:"wt",g:alt,T:alt+" tree",d:"d",r:"r",c:"r can",R:"r2 drytree",X:alt+" tree"}[c]||alt);
+      el.appendChild(t);
+    }));
+  }
+
+  screens.forEach((s,i)=>{
+    if (only && s.dataset.id !== only && String(i+1) !== only) return;
+    const fig=document.createElement("figure"); fig.className="frame"; fig.id=s.dataset.id;
+    fig.innerHTML=`<figcaption><b>${i+1}. ${s.dataset.name}</b><span>${s.dataset.desc}</span></figcaption>`;
+    const vp=document.createElement("div"); vp.className="viewport";
+    const node=s.cloneNode(true); vp.appendChild(node); fig.appendChild(vp); frames.appendChild(fig);
+    const m=node.querySelector("#map"); if(m) buildMap(m);
+    if(!only){
+      const b=document.createElement("button"); b.textContent=`${i+1}. ${s.dataset.name}`;
+      b.onclick=()=>fig.scrollIntoView({behavior:"smooth",block:"start"}); nav.appendChild(b);
+    }
+  });
+
+  function fit(){
+    document.querySelectorAll(".viewport").forEach(vp=>{
+      const sc=vp.clientWidth/1280; vp.firstChild.style.transform=`scale(${sc})`;
+    });
+  }
+  addEventListener("resize",fit); fit();
+})();
+</script>
+</body>
+</html>
